@@ -6,7 +6,6 @@ import Checkout from './components/Checkout';
 import { callStripe } from './components/HOC/StripeApi';
 
 const publicKey = `pk_test_EkIBvnp1PdCW9B6WWgPJePMF`;
-const secretKey = `sk_test_VGHOeXpBmLss7oNI0d73H5iK`;
 
 const HigherCheckout = callStripe(Checkout, publicKey, secretKey)
 
