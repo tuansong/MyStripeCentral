@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import {CardElement, injectStripe } from 'react-stripe-elements'
 
-export default class Checkout extends Component {
+class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +52,11 @@ export default class Checkout extends Component {
         <h2>Checkout 200$</h2>
         <button onClick={this.createCharge}>Charge$</button>
         <h3>Lastest charge is {this.state.lastestCharge}</h3>
+        <input type="number" />
+        {/* <CardElement /> */}
       </div>
     )
   }
 }
+
+export default Checkout;
