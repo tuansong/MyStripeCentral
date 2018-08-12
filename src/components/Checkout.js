@@ -1,24 +1,39 @@
 import React, { Component } from 'react'
-import {CardElement, injectStripe } from 'react-stripe-elements'
+import CreditCardInput from 'react-credit-card-input';
+import { InputGroup, Input, InputGroupAddon, Button } from 'reactstrap'
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastestCharge: 'none'
+      lastestCharge: 'none',
+      number: '',
+      exp: '',
+      cvc: '',
+      money: ''
     }
     this.createCharge = this.createCharge.bind(this);
+    this.handleCardNumberChange = this.handleCardNumberChange.bind(this);
+    this.handleCardExpiryChange = this.handleCardExpiryChange.bind(this);
+    this.handleCardCVCChange = this.handleCardCVCChange.bind(this);
+    this.getMoney = this.getMoney.bind(this);
   }
 
   async createCharge() {
+    const time = this.state.exp.split("/");
+    let month = time[0].replace(/ /g, '');
+    let year = time[1].replace(/ /g, '');
+    let money = this.state.money;
+    console.log(money);
+
     const creditCardInfo = {
-      'card[number]': '4242424242424242',
-      'card[exp_month': '02',
-      'card[exp_year]': '2019'
+      'card[number]': this.state.number,
+      'card[exp_month': month,
+      'card[exp_year]': year
     }
 
     const chargeInfo = {
-      'amount': '200',
+      'amount': money,
       'currency': 'usd',
       'description': 'test_charge_codewalkthrough',
       'source': null
@@ -29,31 +44,64 @@ class Checkout extends Component {
     });
 
     const tokenData = await this.props.postPublic('tokens', creditCardInfo);
-    console.log(tokenData);
 
     this.setState({
       lastestCharge: 'Creating charge...'
     });
 
     chargeInfo['source'] = tokenData.id
-    console.log(chargeInfo);
     const chargeData = await this.props.postSecret('charges', chargeInfo);
-    console.log(chargeData);
 
     this.setState({
       lastestCharge: chargeData.id
     })
   }
 
+  handleCardExpiryChange(e) {
+    let exp = e.target.value;
+    this.setState({
+      exp: exp
+    })
+  }
+
+  handleCardNumberChange(e) {
+    let number = e.target.value;
+    this.setState({
+      number: number
+    })
+  }
+
+  handleCardCVCChange(e) {
+    let cvc = e.target.value;
+    this.setState({
+      cvc: cvc
+    })
+  }
+
+  getMoney(e) {
+    let money = e.target.value;
+    this.setState({
+      money: money
+    })
+  }
 
   render() {
     return (
-      <div>
-        <h2>Checkout 200$</h2>
-        <button onClick={this.createCharge}>Charge$</button>
-        <h3>Lastest charge is {this.state.lastestCharge}</h3>
-        <input type="number" />
-        {/* <CardElement /> */}
+      <div className="checkout">
+          <h1>Checkout</h1>
+          <h3>Lastest charge is {this.state.lastestCharge}</h3>
+          <InputGroup className="mb-3">
+            <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+            <Input placeholder="Amount" type="number" step="1" onChange={this.getMoney} />
+          </InputGroup>
+          <CreditCardInput className="card"
+            cardNumberInputProps={{ value: this.state.number, onChange: this.handleCardNumberChange }}
+            cardExpiryInputProps={{ value: this.state.exp, onChange: this.handleCardExpiryChange }}
+            cardCVCInputProps={{ value: this.state.cvc, onChange: this.handleCardCVCChange }}
+            fieldClassName="input"
+          />
+          <br />
+          <Button color="primary" onClick={this.createCharge}>Pay</Button>{' '}
       </div>
     )
   }

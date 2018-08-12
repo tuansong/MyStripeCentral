@@ -1,3 +1,7 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .selected {
   color: red;
 }
@@ -14,9 +18,24 @@
 .tabs {
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
+  margin-left: 0px;
+  background-color: darkgrey;
+  width: 350px;
+  height: 100vh;
+}
+
+.tabs h1 {
+  text-align: center;
+  margin-top: 50px;
 }
 
 .body {
   margin-left: 100px;
+  border : 2px solid black;
+  height: max-content;
+  padding: 50px;
+}
+
+.card {
+  margin: 50px 0;
 }

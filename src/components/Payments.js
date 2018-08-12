@@ -9,6 +9,7 @@ class Payments extends React.Component {
             loading: false,
         }
         this.getPayments = this.getPayments.bind(this);
+        this.sortAmount = this.sortAmount.bind(this);
     }
 
     componentDidMount() {
@@ -26,6 +27,13 @@ class Payments extends React.Component {
         });
     }
 
+    sortAmount() {
+        let data = this.state.data;
+        let sortedData = data.sort((a,b) => a.amount - b.amount);
+        this.setState({
+            data: sortedData
+        });
+    }
 
     render() {
         const payments = this.state.data.map(p => {
@@ -38,8 +46,8 @@ class Payments extends React.Component {
                 <table>
                     <thead>
                         <tr>
-                            <td><strong>Id</strong></td>
-                            <td><strong>Amount</strong></td>
+                            <td><strong onClick>Id</strong></td>
+                            <td onClick={this.sortAmount}><strong>Amount</strong></td>
                             <td><strong>Refunded</strong></td>
                             <td><strong>Desputed</strong></td>
                             <td><strong>Refund</strong></td>

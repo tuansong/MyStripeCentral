@@ -22,9 +22,6 @@ class App extends Component {
         <Tab name="Payment">
           <HigherPayments />
         </Tab>
-        <Tab name="c">
-
-        </Tab>
       </TabList>
     );
   }
