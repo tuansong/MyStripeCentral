@@ -2,7 +2,7 @@
 
 **MyStripe** is an app using the [Stripe API](https://stripe.com/docs/api).
 
-Time spent: **30** hours spent in total
+Time spent: **25** hours spent in total
 
 ## User Stories
 
