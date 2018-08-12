@@ -15,7 +15,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Clicking on a table header should sort the entries by that element.
+- [ ] Clicking on a table header should sort the entries by amount number.
 
 The following **additional** features are implemented:
 
